@@ -10,5 +10,9 @@ func main() {
 	fmt.Println(true && false)
 	fmt.Println(true || false)
 	fmt.Println(!true)
+
+	fmt.Println([2]bool{true,false})
+	fmt.Println([]int{1,2,3})
+	fmt.Println(map[string]string{"hello": "world"})
 }
 
