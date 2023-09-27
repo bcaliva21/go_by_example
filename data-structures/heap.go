@@ -4,31 +4,34 @@ import "fmt"
 
 type MaxHeap struct {
 	array []int
+	size int
 }
 
 func (h *MaxHeap) Insert(key int) {
 	h.array = append(h.array,key)
-	h.maxHeapifyUp(len(h.array)-1)
+	h.size = len(h.array)-1
+	h.maxHeapifyUp()
 }
 
 func (h *MaxHeap) Extract() int {
 	extracted := h.array[0]
-	l := len(h.array) - 1
+	h.size = h.size-1
 
-	if len(h.array) == 0 {
+	if h.size < 1 {
 		fmt.Println("Nothing to extract")
 		return -1
 	}
 
-	h.array[0] = h.array[l]
-	h.array = h.array[:l]
+	h.array[0] = h.array[h.size]
+	h.array = h.array[:h.size]
 
 	h.maxHeapifyDown(0)
 
 	return extracted
 }
 
-func (h *MaxHeap) maxHeapifyUp(index int) {
+func (h *MaxHeap) maxHeapifyUp() {
+	index := h.size
 	for h.array[parent(index)] < h.array[index] {
 		h.swap(parent(index), index)
 		index = parent(index)
@@ -37,7 +40,7 @@ func (h *MaxHeap) maxHeapifyUp(index int) {
 }
 
 func (h *MaxHeap) maxHeapifyDown(index int) {
-	lastIndex := len(h.array) -1
+	lastIndex := h.size
 	l,r := left(index), right(index)
 	childToCompare := 0
 
