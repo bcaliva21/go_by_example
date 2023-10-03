@@ -26,21 +26,14 @@ func (n *Node) Insert (k int) {
 }
 
 func (n *Node) Search (k int) bool {
-	cur := n
-	for cur.Key != k {
-		if cur.Key > k {
-			if cur.Left == nil {
-				return false
-			} else {
-				cur = cur.Left
-			}
-		} else {
-			if cur.Right == nil {
-				return false
-			} else {
-				cur = cur.Right
-			}
-		}
+	if n == nil {
+		return false
+	}
+
+	if n.Key < k {
+		return n.Right.Search(k)
+	} else if n.Key > k {
+		return n.Left.Search(k)
 	}
 
 	return true
