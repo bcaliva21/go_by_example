@@ -7,6 +7,10 @@ func binarySort (a []int, t int) int {
 	e := len(a)-1
 	m := (s+e)/2
 
+	if a[m] == t {
+		return m
+	}
+
 	for s < e {
 		if a[m] > t {
 			e = m-1
@@ -29,7 +33,7 @@ func main() {
 
 	fmt.Println(binarySort(a, 1))
 	fmt.Println(binarySort(a, 29))
-	fmt.Println(binarySort(a, 0))
+	fmt.Println(binarySort(a, 15))
 	fmt.Println(binarySort(a, 100))
 }
 
