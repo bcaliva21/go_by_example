@@ -8,7 +8,7 @@ func Insertion (a []int) []int {
 		val, j := a[i],i
 
 		for j > 0 && a[j-1] > val {
-			a[j] = a[j -1]
+			a[j] = a[j-1]
 			j--
 		}
 		a[j] = val
