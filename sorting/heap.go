@@ -22,40 +22,16 @@ func (h *MaxHeap) Extract() int {
 	h.List[0] = h.List[l]
 	h.List = h.List[:l]
 
-	h.HeapifyDown()
+	h.HeapifyDown(len(h.List)-1)
 
 	return o
 }
 
-func (h *MaxHeap) HeapifyDown() {
+func (h *MaxHeap) HeapifyDown(last int) {
 	i := 0
-	last := len(h.List) - 1
 	c := 0
 	l := h.GetLeft(i)
 	r := h.GetRight(i)
-
-	for l <= last {
-		if l == last {
-			c = l
-		} else if h.List[l] > h.List[r] {
-			c = l
-		} else {
-			c = r
-		}
-
-		if h.List[i] < h.List[c] {
-			h.Swap(i,c)
-			i = c
-			l,r = h.GetLeft(i), h.GetRight(i)
-		} else {
-			return
-		}
-	}
-}
-
-func (h *MaxHeap) SiftDown(last int) {
-	c,i := 0,0
-	l, r := h.GetLeft(i), h.GetRight(i)
 
 	for l <= last {
 		if l == last {
@@ -111,7 +87,7 @@ func HeapSort (a []int) []int {
 
 	for i := len(h.List) - 1; i > -1; i-- {
 		h.Swap(0,i)
-		h.SiftDown(i-1)
+		h.HeapifyDown(i-1)
 	}
 
 	return h.List
@@ -119,7 +95,18 @@ func HeapSort (a []int) []int {
 
 func main() {
 	a := []int{10,39,8,6,34,4,21,11,0,-10,94,0,-4,99}
+	// heaptest := &MaxHeap{}
 
 	fmt.Println(a)
 	fmt.Println(HeapSort(a))
+	// fmt.Println(heaptest)
+	// heaptest.Insert(10)
+	// heaptest.Insert(20)
+	// heaptest.Insert(30)
+	// heaptest.Insert(40)
+	// heaptest.Insert(50)
+	// fmt.Println(heaptest)
+	// fmt.Println(heaptest.Extract())
+	// fmt.Println(heaptest.Extract())
+	// fmt.Println(heaptest)
 }
