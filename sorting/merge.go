@@ -4,27 +4,22 @@ import "fmt"
 
 func merge (a, b []int) []int {
 	o := []int{}
-	for len(a) > 0 || len(b) > 0 {
-		if len(a) == 0 {
-			for _,v := range b {
-				o = append(o,v)
-			}
-			b = []int{}
+	i, j := 0,0
+	for i <= len(a)-1 || j <= len(b)-1 {
+		if i == len(a) {
+			o = append(o,b[j:]...)
 			break
 		}
-		if len(b) == 0 {
-			for _,v := range a {
-				o = append(o,v)
-			}
-			a = []int{}
+		if j == len(b) {
+			o = append(o,a[i:]...)
 			break
 		}
-		if a[0] <= b[0] {
-			o = append(o,a[0])
-			a = a[1:]
+		if a[i] <= b[j] {
+			o = append(o,a[i])
+			i++
 		} else {
-			o = append(o,b[0])
-			b = b[1:]
+			o = append(o,b[j])
+			j++
 		}
 	}
 
