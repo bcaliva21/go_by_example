@@ -5,7 +5,7 @@ import "fmt"
 func merge (a, b []int) []int {
 	o := []int{}
 	i, j := 0,0
-	for i <= len(a)-1 || j <= len(b)-1 {
+	for i < len(a) || j < len(b) {
 		if i == len(a) {
 			o = append(o,b[j:]...)
 			break
