@@ -34,7 +34,7 @@ func countSort(a []int) []int {
 		num := a[i]
 		idx := c[num]-1
 		if c[num] > 0 {
-			c[num] = c[num]-1
+			c[num]--
 		}
 		if idx > 0 {
 		    o[idx-1] = num
