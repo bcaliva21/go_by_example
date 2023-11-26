@@ -6,81 +6,6 @@ import (
 	"strconv"
 )
 
-func countSort(a []int) []int {
-	m := int(math.Inf(-1))
-
-	// find max
-	for _,v := range a {
-		if v > m {
-			m = v
-		}
-	}
-
-	c := make([]int,m+1)
-
-	// count occurences
-	for _,v := range a {
-		c[v]++
-	}
-
-	// calc prefix sum
-	for i := 1; i < len(c); i++ {
-		c[i] += c[i-1]
-	}
-
-	o := make([]int,len(a)-1)
-
-	// populate output array
-	for i := len(a)-1; i > -1; i-- {
-		num := a[i]
-		idx := c[num]-1
-		if c[num] > 0 {
-			c[num] = c[num]-1
-		}
-		if idx > 0 {
-		    o[idx-1] = num
-		}
-	}
-
-	return o
-}
-
-func getDigitCount(n int) int {
-	s := strconv.Itoa(n)
-	return len(s)
-}
-
-func radixSort(a []int) []int {
-	m := int(math.Inf(-1))
-
-	for _,v := range a {
-		if v > m {
-			m = v
-		}
-	}
-	md := getDigitCount(m)
-	
-	for i := 0; i < md; i++ {
-	    da := make([]int,len(a))
-		for j := range a {
-			da[j] = getDigitAtPlace(a[j],i)
-		}
-		da = countSort(da)
-
-		// prefix arr, do we need to do this?
-		for i := 1; i < len(da); i++ {
-			da[i] = da[i-1]+da[i]
-		}
-
-	}
-
-	return []int{0}
-}
-
-// takes in a number,n and a place, p
-// we can build an array of single digits
-// based on the place we are planning to sort
-
 func getDigitAtPlace(n, p int) int {
 	s := strconv.Itoa(n)
 	if p > len(s)-1 {
@@ -95,8 +20,54 @@ func getDigitAtPlace(n, p int) int {
 	return o[p]
 }
 
+func getDigitCount(n int) int {
+	s := strconv.Itoa(n)
+	return len(s)
+}
+
+func radixSort(input []int) []int {
+	m := int(math.Inf(-1))
+
+	for _,v := range input {
+		if v > m {
+			m = v
+		}
+	}
+	md := getDigitCount(m)
+	
+	for i := 0; i < md; i++ {
+	    digits := make([]int,len(input))
+		for j := range input {
+			digits[j] = getDigitAtPlace(input[j],i)
+		}
+		occurences := [10]int{}
+
+		for _,v := range digits {
+			occurences[v]++
+		}
+
+		for i := 1; i < len(occurences); i++ {
+			occurences[i] += occurences[i-1]
+		}
+
+		orderedDigits := make([]int,len(input))
+		reconstructedInput := make([]int,len(input))
+
+		for i := len(digits)-1; i > -1; i-- {
+			val := digits[i]
+			occurences[val] -= 1
+			idx := occurences[val]
+			orderedDigits[idx] = val
+			reconstructedInput[idx] = input[i]
+		}
+		input = reconstructedInput
+	}
+
+	return input
+}
+
 func main() {
-	a := []int{53,89,150,36,633,233}
+	a := []int{53,89,150,36,633,233,9000,18,17,0,887}
 	
 	fmt.Println(a)
 	fmt.Println(radixSort(a))
