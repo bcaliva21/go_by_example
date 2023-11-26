@@ -25,17 +25,18 @@ func getDigitCount(n int) int {
 	return len(s)
 }
 
+// this implementation uses counting sort
 func radixSort(input []int) []int {
-	m := int(math.Inf(-1))
+	maxVal := int(math.Inf(-1))
 
 	for _,v := range input {
-		if v > m {
-			m = v
+		if v > maxVal {
+			maxVal = v
 		}
 	}
-	md := getDigitCount(m)
+	numOfMaxValDigits := getDigitCount(maxVal)
 	
-	for i := 0; i < md; i++ {
+	for i := 0; i < numOfMaxValDigits; i++ {
 	    digits := make([]int,len(input))
 		for j := range input {
 			digits[j] = getDigitAtPlace(input[j],i)
