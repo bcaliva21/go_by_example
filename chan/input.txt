@@ -1,0 +1,13 @@
+bananas
+strawberries
+apples
+mangos
+blueberries
+raspberries
+kiwis
+coconuts
+blackberries
+elderberries
+peaches
+pears
+
